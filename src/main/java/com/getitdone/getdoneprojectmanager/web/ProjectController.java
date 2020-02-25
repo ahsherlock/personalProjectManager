@@ -19,13 +19,10 @@ import java.util.Map;
 @RestController
 @RequestMapping("api/project")
 public class ProjectController {
-
     @Autowired // (AlecIssue1)
     private ProjectService projectService;
-
     @Autowired
     private MapValidationErrorService mapValidationErrorService;
-
     @PostMapping("")
     public ResponseEntity<?> createNewProject(@Valid @RequestBody Project project, BindingResult result){
         ResponseEntity<?> errorMap = mapValidationErrorService.MapValidationService(result);
@@ -33,12 +30,13 @@ public class ProjectController {
         Project project1 = projectService.saveOrUpdateProject(project);
         return new ResponseEntity<Project>(project1, HttpStatus.CREATED);
     }
-
     @GetMapping("/{projectId}")
     public ResponseEntity<?> getProjectById(@PathVariable String projectId){
         Project project = projectService.findProjectByIdentifier(projectId);
-
-
         return new ResponseEntity<Project>(project, HttpStatus.OK);
     }
+    @GetMapping("/all")
+    public Iterable<Project> getAllProjects(){return projectService.findAllProjects();}
+
+
 }
