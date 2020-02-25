@@ -14,7 +14,6 @@ public class Project {
     private String description;
     private Date start_date;
     private Date end_date;
-
     private Date created_At;
     private Date updated_At;
 
